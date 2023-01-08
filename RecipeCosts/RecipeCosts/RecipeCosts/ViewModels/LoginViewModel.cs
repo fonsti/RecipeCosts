@@ -66,7 +66,6 @@ namespace RecipeCosts.ViewModels
                 email = value;
                 MyUser.Email = email;
                 LoginCommand.ChangeCanExecute();
-                RegisterCommand.ChangeCanExecute();
             }
         }
 
@@ -90,7 +89,6 @@ namespace RecipeCosts.ViewModels
                 password = value; 
                 MyUser.Password = password;
                 LoginCommand.ChangeCanExecute();
-                RegisterCommand.ChangeCanExecute();
             }
         }
 
@@ -102,7 +100,7 @@ namespace RecipeCosts.ViewModels
             set { 
                 confirmPassword = value;
                 MyUser.ConfirmPassword = confirmPassword;
-                RegisterCommand.ChangeCanExecute();
+                LoginCommand.ChangeCanExecute();
             }
         }
 
@@ -114,7 +112,6 @@ namespace RecipeCosts.ViewModels
         public LoginViewModel()
         {
             LoginCommand = new Command( async () => { await OnLoginClicked(); }, () => { return OnLoginClickedEnabled(); });
-            RegisterCommand = new Command(() => { OnRegisterClicked(); }, () => { return OnRegisterclickedEnabled(); });
             SwitchLoginModeCommand = new Command(OnSwitchLoginModeClicked);
 
             MyUser = new User();
@@ -137,51 +134,49 @@ namespace RecipeCosts.ViewModels
 
         private bool OnLoginClickedEnabled()
         {
-            if (MyUser == null)
+            if (RegisterLayoutVisible)
             {
-                return false;
-            }
-            if (String.IsNullOrEmpty(MyUser.Email))
+                if (MyUser == null)
+                {
+                    return false;
+                }
+                if (String.IsNullOrEmpty(MyUser.Email))
+                {
+                    return false;
+                }
+                if (String.IsNullOrEmpty(MyUser.Password))
+                {
+                    return false;
+                }
+                if (String.IsNullOrEmpty(MyUser.ConfirmPassword))
+                {
+                    return false;
+                }
+                if (!MyUser.Password.Equals(MyUser.ConfirmPassword))
+                {
+                    return false;
+                }
+
+                return true;
+            } else
             {
-                return false;
-            }
-            if (String.IsNullOrEmpty(MyUser.Password))
-            {
-                return false;
+                if (MyUser == null)
+                {
+                    return false;
+                }
+                if (String.IsNullOrEmpty(MyUser.Email))
+                {
+                    return false;
+                }
+                if (String.IsNullOrEmpty(MyUser.Password))
+                {
+                    return false;
+                }
+
+                return true;
             }
 
-            return true;
-        }
-
-        private void OnRegisterClicked()
-        {
-
-        }
-
-        private bool OnRegisterclickedEnabled()
-        {
-            if (MyUser == null)
-            {
-                return false;
-            }
-            if (String.IsNullOrEmpty(MyUser.Email))
-            {
-                return false;
-            }
-            if (String.IsNullOrEmpty(MyUser.Password))
-            {
-                return false;
-            }
-            if (String.IsNullOrEmpty(MyUser.ConfirmPassword))
-            {
-                return false;
-            }
-            if (!MyUser.Password.Equals(MyUser.ConfirmPassword))
-            {
-                return false;
-            }
-
-            return true;
+            
         }
 
         private void OnSwitchLoginModeClicked()
@@ -197,6 +192,8 @@ namespace RecipeCosts.ViewModels
                 LoginButtonText = "Register";
                 SwitchLayoutButtonText = "Switch to Login";
             }
+
+            LoginCommand.ChangeCanExecute();
         }
     }
 }

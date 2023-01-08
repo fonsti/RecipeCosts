@@ -38,7 +38,7 @@
                 <Button 
                     VerticalOptions="Center" 
                     Text="{Binding LoginButtonText}" 
-                    Command="{Binding RegisterCommand}"/>
+                    Command="{Binding LoginCommand}"/>
                 <Button
                     VerticalOptions="Center"
                     Text="{Binding SwitchLayoutButtonText}"

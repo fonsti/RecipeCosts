@@ -5,7 +5,7 @@ VisualStudioVersion = 17.3.32901.215
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecipeCosts.Android", "RecipeCosts\RecipeCosts.Android\RecipeCosts.Android.csproj", "{26F9C85F-23A1-46E1-9CAB-82A20A919918}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecipeCosts", "RecipeCosts\RecipeCosts\RecipeCosts.csproj", "{DE3D54B9-BD97-4883-ADA4-72AE21ABEDFB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecipeCosts", "RecipeCosts\RecipeCosts\RecipeCosts.csproj", "{DE3D54B9-BD97-4883-ADA4-72AE21ABEDFB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
