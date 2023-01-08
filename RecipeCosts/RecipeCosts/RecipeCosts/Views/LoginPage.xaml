@@ -3,12 +3,68 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:RecipeCosts.ViewModels"
              mc:Ignorable="d"
              x:Class="RecipeCosts.Views.LoginPage"
              Shell.NavBarIsVisible="False">
+
+    <ContentPage.BindingContext>
+        <vm:LoginViewModel/>
+    </ContentPage.BindingContext>
+
     <ContentPage.Content>
-        <StackLayout Padding="10,0,10,0" VerticalOptions="Center">
-            <Button VerticalOptions="Center" Text="Login" Command="{Binding LoginCommand}"/>
-        </StackLayout>
+        <Grid>
+            <StackLayout
+                x:Name="LoginLayout"
+                Padding="10,0,10,0" 
+                VerticalOptions="Center"
+                IsVisible="{Binding LoginLayoutVisible, Mode=TwoWay, UpdateSourceEventName=PropertyChanged}">
+                <Entry
+                    Placeholder="Email"
+                    Text="{Binding Email, Mode=TwoWay, UpdateSourceEventName=PropertyChanged}"/>
+                <Entry
+                    Placeholder="Password"
+                    Text="{Binding Password, UpdateSourceEventName=PropertyChanged}"
+                    IsPassword="True"/>
+                <Button 
+                    VerticalOptions="Center" 
+                    Text="Login" 
+                    Command="{Binding LoginCommand}"/>
+                <Button
+                    VerticalOptions="Center"
+                    Text="Switch to Register"
+                    Command="{Binding SwitchLoginModeCommand}"/>
+            </StackLayout>
+
+            <StackLayout
+                x:Name="RegisterLayout"
+                Padding="10,0,10,0"
+                VerticalOptions="Center"
+                IsVisible="{Binding RegisterLayoutVisible, Mode=TwoWay, UpdateSourceEventName=PropertyChanged}">
+                <Entry
+                    Placeholder="Email"
+                    Text="{Binding Email, Mode=TwoWay, UpdateSourceEventName=PropertyChanged}"/>
+                <Entry
+                    Placeholder="Username"
+                    Text="{Binding UserName, Mode=TwoWay, UpdateSourceEventName=PropertyChanged}"/>
+                <Entry
+                    Placeholder="Password"
+                    Text="{Binding Password, Mode=TwoWay, UpdateSourceEventName=PropertyChanged}"
+                    IsPassword="True"/>
+                <Entry
+                    Placeholder="Confirm password"
+                    Text="{Binding ConfirmPassword, Mode=TwoWay, UpdateSourceEventName=PropertyChanged}"
+                    IsPassword="True"/>
+                <Button 
+                    VerticalOptions="Center" 
+                    Text="Register" 
+                    Command="{Binding RegisterCommand}"/>
+                <Button
+                    VerticalOptions="Center"
+                    Text="Switch to Login"
+                    Command="{Binding SwitchLoginModeCommand}"/>
+            </StackLayout>
+
+        </Grid>
     </ContentPage.Content>
 </ContentPage>

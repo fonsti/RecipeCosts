@@ -16,7 +16,7 @@ namespace RecipeCosts.Model.Helpers
             {
                 var body = new
                 {
-                    email = user.Username,
+                    email = user.Email,
                     password = user.Password,
                     returnSecureToken = true
                 };
@@ -50,7 +50,7 @@ namespace RecipeCosts.Model.Helpers
             {
                 var body = new
                 {
-                    email = user.Username,
+                    email = user.Email,
                     password = user.Password,
                     returnSecureToken = true
                 };

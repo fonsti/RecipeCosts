@@ -1,12 +1,37 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="RecipeCosts.Views.SettingsPage">
+             x:Class="RecipeCosts.Views.SettingsPage"
+             xmlns:vm="clr-namespace:RecipeCosts.ViewModels">
+
+    <ContentPage.BindingContext>
+        <vm:SettingsViewModel />
+    </ContentPage.BindingContext>
+
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <StackLayout
+                Grid.Column="0"
+                Grid.Row="0"
+                Orientation="Vertical">
+                <Label
+                    Text="Logged in as:"/>
+                <Entry/>
+            </StackLayout>
+            <Button
+                Grid.Row="0"
+                Grid.Column="1"
+                Text="Login"
+                Command="{Binding LoginLogoutCommand}"
+                Margin="10"/>
+        </Grid>
     </ContentPage.Content>
 </ContentPage>
