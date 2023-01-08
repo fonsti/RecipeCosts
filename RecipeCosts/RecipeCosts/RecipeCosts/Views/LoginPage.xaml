@@ -15,38 +15,17 @@
     <ContentPage.Content>
         <Grid>
             <StackLayout
-                x:Name="LoginLayout"
-                Padding="10,0,10,0" 
-                VerticalOptions="Center"
-                IsVisible="{Binding LoginLayoutVisible, Mode=TwoWay, UpdateSourceEventName=PropertyChanged}">
-                <Entry
-                    Placeholder="Email"
-                    Text="{Binding Email, Mode=TwoWay, UpdateSourceEventName=PropertyChanged}"/>
-                <Entry
-                    Placeholder="Password"
-                    Text="{Binding Password, UpdateSourceEventName=PropertyChanged}"
-                    IsPassword="True"/>
-                <Button 
-                    VerticalOptions="Center" 
-                    Text="Login" 
-                    Command="{Binding LoginCommand}"/>
-                <Button
-                    VerticalOptions="Center"
-                    Text="Switch to Register"
-                    Command="{Binding SwitchLoginModeCommand}"/>
-            </StackLayout>
-
-            <StackLayout
                 x:Name="RegisterLayout"
                 Padding="10,0,10,0"
-                VerticalOptions="Center"
-                IsVisible="{Binding RegisterLayoutVisible, Mode=TwoWay, UpdateSourceEventName=PropertyChanged}">
+                VerticalOptions="Center">
                 <Entry
                     Placeholder="Email"
-                    Text="{Binding Email, Mode=TwoWay, UpdateSourceEventName=PropertyChanged}"/>
+                    Text="{Binding Email, Mode=TwoWay, UpdateSourceEventName=PropertyChanged}"
+                    Keyboard="Email"/>
                 <Entry
                     Placeholder="Username"
-                    Text="{Binding UserName, Mode=TwoWay, UpdateSourceEventName=PropertyChanged}"/>
+                    Text="{Binding UserName, Mode=TwoWay, UpdateSourceEventName=PropertyChanged}"
+                    IsVisible="{Binding RegisterLayoutVisible}"/>
                 <Entry
                     Placeholder="Password"
                     Text="{Binding Password, Mode=TwoWay, UpdateSourceEventName=PropertyChanged}"
@@ -54,14 +33,15 @@
                 <Entry
                     Placeholder="Confirm password"
                     Text="{Binding ConfirmPassword, Mode=TwoWay, UpdateSourceEventName=PropertyChanged}"
+                    IsVisible="{Binding RegisterLayoutVisible}"
                     IsPassword="True"/>
                 <Button 
                     VerticalOptions="Center" 
-                    Text="Register" 
+                    Text="{Binding LoginButtonText}" 
                     Command="{Binding RegisterCommand}"/>
                 <Button
                     VerticalOptions="Center"
-                    Text="Switch to Login"
+                    Text="{Binding SwitchLayoutButtonText}"
                     Command="{Binding SwitchLoginModeCommand}"/>
             </StackLayout>
 

@@ -14,17 +14,6 @@ namespace RecipeCosts.ViewModels
         private const string KEY_USERID = "UserId";
         private const string KEY_USERNAME = "UserName";
 
-        private bool loginLayoutVisible;
-
-        public bool LoginLayoutVisible
-        {
-            get { return loginLayoutVisible; }
-            set { 
-                loginLayoutVisible = value;
-                OnPropertyChanged();
-            }
-        }
-
         private bool registerLayoutVisible;
 
         public bool RegisterLayoutVisible
@@ -36,6 +25,27 @@ namespace RecipeCosts.ViewModels
             }
         }
 
+        private string loginButtonText;
+
+        public string LoginButtonText
+        {
+            get { return loginButtonText; }
+            set {
+                loginButtonText = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string switchLayoutButtonText;
+
+        public string SwitchLayoutButtonText
+        {
+            get { return switchLayoutButtonText; }
+            set { 
+                switchLayoutButtonText = value;
+                OnPropertyChanged();
+            }
+        }
 
         public User MyUser{ get; set; }
 
@@ -59,7 +69,6 @@ namespace RecipeCosts.ViewModels
                 RegisterCommand.ChangeCanExecute();
             }
         }
-
 
         private string userName;
 
@@ -110,8 +119,9 @@ namespace RecipeCosts.ViewModels
 
             MyUser = new User();
 
-            LoginLayoutVisible = true;
             RegisterLayoutVisible = false;
+            LoginButtonText = "Login";
+            SwitchLayoutButtonText = "Switch to Register";
 
             //if (Application.Current.Properties.TryGetValue(KEY_USERID, out object userIdProperty))
             //{
@@ -176,14 +186,16 @@ namespace RecipeCosts.ViewModels
 
         private void OnSwitchLoginModeClicked()
         {
-            if (LoginLayoutVisible)
+            if (RegisterLayoutVisible)
             {
-                LoginLayoutVisible = false;
-                RegisterLayoutVisible = true;
+                RegisterLayoutVisible = false;
+                LoginButtonText = "Login";
+                SwitchLayoutButtonText = "Switch to Register";
             } else
             {
-                LoginLayoutVisible = true;
-                RegisterLayoutVisible = false;
+                RegisterLayoutVisible = true;
+                LoginButtonText = "Register";
+                SwitchLayoutButtonText = "Switch to Login";
             }
         }
     }
