@@ -37,6 +37,7 @@ namespace RecipeCosts.Model.Helpers
                 {
                     string errorJson = await response.Content.ReadAsStringAsync();
                     var error = JsonConvert.DeserializeObject<Error>(errorJson);
+                    await App.Current.MainPage.DisplayAlert("Error", error.error.message, "OK");
                     //Toast.MakeText(Application.Context, error.error.message, ToastLength.Long).Show();
 
                     return null;
@@ -71,6 +72,7 @@ namespace RecipeCosts.Model.Helpers
                 {
                     string errorJson = await response.Content.ReadAsStringAsync();
                     var error = JsonConvert.DeserializeObject<Error>(errorJson);
+                    await App.Current.MainPage.DisplayAlert("Error", error.error.message, "OK");
                     //Toast.MakeText(Application.Context, error.error.message, ToastLength.Long).Show();
 
                     return null;

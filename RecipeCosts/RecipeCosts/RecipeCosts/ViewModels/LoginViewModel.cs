@@ -1,4 +1,7 @@
 ﻿using RecipeCosts.Model;
+using RecipeCosts.Model.Helpers;
+using RecipeCosts.Model.Security;
+using RecipeCosts.Models.Keys;
 using RecipeCosts.Views;
 using System;
 using System.Collections.Generic;
@@ -128,6 +131,16 @@ namespace RecipeCosts.ViewModels
 
         private async Task OnLoginClicked()
         {
+            var apiKeyFirebase = StringCipher.DecryptStringAes(ApiKeys.Firebase.ApiKeyEncrypted, ApiKeys.Firebase.AesKey, ApiKeys.Firebase.AesIV);
+
+            if (RegisterLayoutVisible)
+            {
+                var id = await FirebaseAuthHelper.Register(MyUser, apiKeyFirebase);
+
+            } else
+            {
+
+            }
             // Prefixing with `//` switches to a different navigation stack instead of pushing to the active one
             await Shell.Current.GoToAsync($"//{nameof(AboutPage)}");
         }
@@ -175,8 +188,6 @@ namespace RecipeCosts.ViewModels
 
                 return true;
             }
-
-            
         }
 
         private void OnSwitchLoginModeClicked()
