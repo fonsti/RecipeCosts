@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows.Input;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace RecipeCosts.ViewModels
@@ -12,16 +13,63 @@ namespace RecipeCosts.ViewModels
         private const string KEY_USERID = "UserId";
         private const string KEY_USERNAME = "UserName";
 
+        private string loginButtonText;
+
+        public string LoginButtonText
+        {
+            get { return loginButtonText; }
+            set { 
+                loginButtonText = value; 
+                OnPropertyChanged();
+            }
+        }
+
+
+        private string userId;
+
+        public string UserId
+        {
+            get { return userId; }
+            set { 
+                userId = value;
+                OnPropertyChanged();
+            }
+        }
+
+
         public ICommand LoginLogoutCommand { get; }
 
         public SettingsViewModel()
         {
-            LoginLogoutCommand = new Command(LoginLogout);
+            LoginLogoutCommand = new Command(OnLoginLogoutClicked);
+
+            Init();
         }
 
-        private async void LoginLogout()
+        public void Init()
         {
-            await Shell.Current.GoToAsync($"//{nameof(LoginPage)}");
+            if (Preferences.ContainsKey("UserId"))
+            {
+                UserId = Preferences.Get("UserId", "Not found");
+                LoginButtonText = "Logout";
+            }
+            else
+            {
+                LoginButtonText = "Login";
+            }
+        }
+
+        private async void OnLoginLogoutClicked()
+        {
+            if (LoginButtonText.Equals("Login"))
+            {
+                await Shell.Current.GoToAsync($"//{nameof(LoginPage)}");
+            } else
+            {
+                Preferences.Remove("UserId");
+                UserId = "";
+                LoginButtonText = "Login";
+            }
         }
     }
 }

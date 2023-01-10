@@ -8,7 +8,9 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Xamarin.Essentials;
 using Xamarin.Forms;
+using static RecipeCosts.Model.Helpers.FirebaseAuthHelper;
 
 namespace RecipeCosts.ViewModels
 {
@@ -137,9 +139,36 @@ namespace RecipeCosts.ViewModels
             {
                 var id = await FirebaseAuthHelper.Register(MyUser, apiKeyFirebase);
 
+                if (!String.IsNullOrEmpty(id))
+                {
+                    MyUser.Id = id;
+                    if (!Application.Current.Resources.ContainsKey("UserId"))
+                    {
+                        //Application.Current.Resources.Add("UserId", MyUser.Id);
+                        Preferences.Set("UserId", MyUser.Id);
+                    }
+                    else
+                    {
+                        await App.Current.MainPage.DisplayAlert("Error", "A user is already logged in.", "OK");
+                    }
+                }
             } else
             {
+                var id = await FirebaseAuthHelper.Login(MyUser, apiKeyFirebase);
 
+                if (!String.IsNullOrEmpty(id))
+                {
+                    MyUser.Id = id;
+                    if (!Application.Current.Resources.ContainsKey("UserId"))
+                    {
+                        //Application.Current.Resources.Add("UserId", MyUser.Id);
+                        Preferences.Set("UserId", MyUser.Id);
+                    }
+                    else
+                    {
+                        await App.Current.MainPage.DisplayAlert("Error", "A user is already logged in.", "OK");
+                    }
+                }
             }
             // Prefixing with `//` switches to a different navigation stack instead of pushing to the active one
             await Shell.Current.GoToAsync($"//{nameof(AboutPage)}");

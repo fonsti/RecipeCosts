@@ -24,12 +24,14 @@
                 Orientation="Vertical">
                 <Label
                     Text="Logged in as:"/>
-                <Entry/>
+                <Entry
+                    Text="{Binding UserId, Mode=OneWay, UpdateSourceEventName=PropertyChanged}"
+                    IsReadOnly="True"/>
             </StackLayout>
             <Button
                 Grid.Row="0"
                 Grid.Column="1"
-                Text="Login"
+                Text="{Binding LoginButtonText, Mode=OneWay, UpdateSourceEventName=PropertyChanged}"
                 Command="{Binding LoginLogoutCommand}"
                 Margin="10"/>
         </Grid>
