@@ -14,10 +14,23 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="Resources\ApiKeys.json" />
+    <None Remove="GettingStarted.txt" />
+    <None Remove="recipecosts-service.json" />
+    <None Remove="Resources\google-services.json" />
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="GettingStarted.txt" />
+    <EmbeddedResource Include="recipecosts-service.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\google-services.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Google.Cloud.Firestore" Version="3.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
     <PackageReference Include="Xamarin.Forms" Version="5.0.0.2196" />  
     <PackageReference Include="Xamarin.Essentials" Version="1.7.0" />
