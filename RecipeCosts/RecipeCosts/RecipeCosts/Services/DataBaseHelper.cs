@@ -41,16 +41,18 @@ namespace RecipeCosts.Model.Helpers
 
             using (var client = new HttpClient())
             {
-                var result = await client.PatchAsync($"{dbPath}{item.GetType().Name.ToLower()}/{item.Id}.json", content);
+                //var result = await client.PatchAsync($"{dbPath}{item.GetType().Name.ToLower()}/{item.Id}.json", content);
 
-                if (result.IsSuccessStatusCode)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                //if (result.IsSuccessStatusCode)
+                //{
+                //    return true;
+                //}
+                //else
+                //{
+                //    return false;
+                //}
+
+                return false;
             }
         }
 

@@ -8,6 +8,6 @@ namespace RecipeCosts.Model
 {
     public interface HasId
     {
-        public string Id { get; set; }
+        string Id { get; set; }
     }
 }
