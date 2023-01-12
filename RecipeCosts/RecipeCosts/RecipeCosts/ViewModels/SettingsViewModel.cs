@@ -80,7 +80,7 @@ namespace RecipeCosts.ViewModels
         {
             if (LoginButtonText.Equals("Login"))
             {
-                await Shell.Current.GoToAsync($"//{nameof(LoginPage)}");
+                await Shell.Current.GoToAsync($"{nameof(LoginPage)}");
             } else
             {
                 Preferences.Remove(PreferenceKeys.PREF_CURRENT_APP_USER_ID);

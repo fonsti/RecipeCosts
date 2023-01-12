@@ -117,22 +117,28 @@ namespace RecipeCosts.ViewModels
         public Command LoginCommand { get; }
         public Command RegisterCommand { get; }
         public Command SwitchLoginModeCommand { get; set; }
+        public Command CancelCommand { get; set; }
 
         public LoginViewModel()
         {
             LoginCommand = new Command( async () => { await OnLoginClicked(); }, () => { return OnLoginClickedEnabled(); });
             SwitchLoginModeCommand = new Command(OnSwitchLoginModeClicked);
+            CancelCommand = new Command(OnCancelClicked);
 
+            Init();
+        }
+
+        public void Init()
+        {
             MyUser = new User();
 
             RegisterLayoutVisible = false;
+            Email = "";
+            UserName = "";
+            Password = "";
+            ConfirmPassword = "";
             LoginButtonText = "Login";
             SwitchLayoutButtonText = "Switch to Register";
-
-            //if (Application.Current.Properties.TryGetValue(KEY_USERID, out object userIdProperty))
-            //{
-            //    UserId = userIdProperty.ToString();
-            //}
         }
 
         private async Task OnLoginClicked()
@@ -239,6 +245,11 @@ namespace RecipeCosts.ViewModels
             }
 
             LoginCommand.ChangeCanExecute();
+        }
+
+        public async void OnCancelClicked()
+        {
+            await Shell.Current.GoToAsync($"//{nameof(AboutPage)}");
         }
     }
 }

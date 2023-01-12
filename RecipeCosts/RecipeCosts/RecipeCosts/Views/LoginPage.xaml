@@ -6,11 +6,15 @@
              xmlns:vm="clr-namespace:RecipeCosts.ViewModels"
              mc:Ignorable="d"
              x:Class="RecipeCosts.Views.LoginPage"
-             Shell.NavBarIsVisible="False">
+             Shell.NavBarIsVisible="True">
 
     <ContentPage.BindingContext>
         <vm:LoginViewModel/>
     </ContentPage.BindingContext>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Cancel" Command="{Binding CancelCommand}"/>
+    </ContentPage.ToolbarItems>
 
     <ContentPage.Content>
         <Grid>
