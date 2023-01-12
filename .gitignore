@@ -351,3 +351,5 @@ MigrationBackup/
 RecipeCosts/RecipeCosts/RecipeCosts.Android/Assets/ApiKeys.json
 RecipeCosts/RecipeCosts/RecipeCosts/Models/Keys/ApiKeys.cs
 RecipeCosts/RecipeCosts/RecipeCosts/recipecosts-service.json
+RecipeCosts/RecipeCosts/RecipeCosts.Android/google-services.json
+RecipeCosts/RecipeCosts/RecipeCosts/google-services.json

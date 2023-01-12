@@ -1,10 +1,13 @@
-﻿using RecipeCosts.Model;
+﻿using Newtonsoft.Json;
+using Plugin.CloudFirestore;
+using RecipeCosts.Model;
 using RecipeCosts.Model.Helpers;
 using RecipeCosts.Model.Security;
 using RecipeCosts.Models.Keys;
 using RecipeCosts.Views;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -142,14 +145,15 @@ namespace RecipeCosts.ViewModels
                 if (!String.IsNullOrEmpty(id))
                 {
                     MyUser.Id = id;
-                    if (!Application.Current.Resources.ContainsKey("UserId"))
+                    if (!Preferences.ContainsKey("UserId"))
                     {
                         //Application.Current.Resources.Add("UserId", MyUser.Id);
                         Preferences.Set("UserId", MyUser.Id);
-                    }
-                    else
-                    {
-                        await App.Current.MainPage.DisplayAlert("Error", "A user is already logged in.", "OK");
+
+                        await CrossCloudFirestore.Current.Instance.Collection("AppUsers").AddAsync(MyUser);
+
+                        var userAsJson = JsonConvert.SerializeObject(MyUser);
+                        Preferences.Set("CurrentAppUser", userAsJson);
                     }
                 }
             } else
@@ -159,15 +163,15 @@ namespace RecipeCosts.ViewModels
                 if (!String.IsNullOrEmpty(id))
                 {
                     MyUser.Id = id;
-                    if (!Application.Current.Resources.ContainsKey("UserId"))
-                    {
-                        //Application.Current.Resources.Add("UserId", MyUser.Id);
-                        Preferences.Set("UserId", MyUser.Id);
-                    }
-                    else
-                    {
-                        await App.Current.MainPage.DisplayAlert("Error", "A user is already logged in.", "OK");
-                    }
+
+                    Preferences.Set("UserId", MyUser.Id);
+
+                    var query = await CrossCloudFirestore.Current.Instance.Collection("AppUsers").WhereEqualsTo("Id", MyUser.Id).LimitTo(1).GetAsync();
+
+                    MyUser = query.ToObjects<User>().FirstOrDefault();
+
+                    var userAsJson = JsonConvert.SerializeObject(MyUser);
+                    Preferences.Set("CurrentAppUser", userAsJson);
                 }
             }
             // Prefixing with `//` switches to a different navigation stack instead of pushing to the active one

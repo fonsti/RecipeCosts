@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using Plugin.CloudFirestore.Attributes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,7 +15,11 @@ namespace RecipeCosts.Model
         public string LastName { get; set; }
         public string Email { get; set; }
         public string UserName { get; set; }
+        [Ignored]
+        [JsonIgnore]
         public string Password { get; set; }
+        [Ignored]
+        [JsonIgnore]
         public string ConfirmPassword { get; set; }
     }
 }
