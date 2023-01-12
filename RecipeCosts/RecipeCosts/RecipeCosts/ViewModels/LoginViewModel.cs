@@ -3,6 +3,7 @@ using Plugin.CloudFirestore;
 using RecipeCosts.Model;
 using RecipeCosts.Model.Helpers;
 using RecipeCosts.Model.Security;
+using RecipeCosts.Models;
 using RecipeCosts.Models.Keys;
 using RecipeCosts.Views;
 using System;
@@ -145,15 +146,15 @@ namespace RecipeCosts.ViewModels
                 if (!String.IsNullOrEmpty(id))
                 {
                     MyUser.Id = id;
-                    if (!Preferences.ContainsKey("UserId"))
+                    if (!Preferences.ContainsKey(PreferenceKeys.PREF_CURRENT_APP_USER_ID))
                     {
                         //Application.Current.Resources.Add("UserId", MyUser.Id);
-                        Preferences.Set("UserId", MyUser.Id);
+                        Preferences.Set(PreferenceKeys.PREF_CURRENT_APP_USER_ID, MyUser.Id);
 
-                        await CrossCloudFirestore.Current.Instance.Collection("AppUsers").AddAsync(MyUser);
+                        await CrossCloudFirestore.Current.Instance.Collection(FirebaseCollectionKeys.COL_APP_USERS).AddAsync(MyUser);
 
                         var userAsJson = JsonConvert.SerializeObject(MyUser);
-                        Preferences.Set("CurrentAppUser", userAsJson);
+                        Preferences.Set(PreferenceKeys.PREF_CURRENT_APP_USER, userAsJson);
                     }
                 }
             } else
@@ -164,14 +165,14 @@ namespace RecipeCosts.ViewModels
                 {
                     MyUser.Id = id;
 
-                    Preferences.Set("UserId", MyUser.Id);
+                    Preferences.Set(PreferenceKeys.PREF_CURRENT_APP_USER_ID, MyUser.Id);
 
-                    var query = await CrossCloudFirestore.Current.Instance.Collection("AppUsers").WhereEqualsTo("Id", MyUser.Id).LimitTo(1).GetAsync();
+                    var query = await CrossCloudFirestore.Current.Instance.Collection(FirebaseCollectionKeys.COL_APP_USERS).WhereEqualsTo("Id", MyUser.Id).LimitTo(1).GetAsync();
 
                     MyUser = query.ToObjects<User>().FirstOrDefault();
 
                     var userAsJson = JsonConvert.SerializeObject(MyUser);
-                    Preferences.Set("CurrentAppUser", userAsJson);
+                    Preferences.Set(PreferenceKeys.PREF_CURRENT_APP_USER, userAsJson);
                 }
             }
             // Prefixing with `//` switches to a different navigation stack instead of pushing to the active one

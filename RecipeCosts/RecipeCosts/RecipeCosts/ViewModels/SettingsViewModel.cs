@@ -1,4 +1,7 @@
-﻿using RecipeCosts.Views;
+﻿using Newtonsoft.Json;
+using RecipeCosts.Model;
+using RecipeCosts.Models;
+using RecipeCosts.Views;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -24,18 +27,18 @@ namespace RecipeCosts.ViewModels
             }
         }
 
+        private string userName;
 
-        private string userId;
-
-        public string UserId
+        public string UserName
         {
-            get { return userId; }
+            get { return userName; }
             set { 
-                userId = value;
+                userName = value;
                 OnPropertyChanged();
             }
         }
 
+        public User AppUser { get; set; }
 
         public ICommand LoginLogoutCommand { get; }
 
@@ -48,10 +51,24 @@ namespace RecipeCosts.ViewModels
 
         public void Init()
         {
-            if (Preferences.ContainsKey("UserId"))
+            if (Preferences.ContainsKey(PreferenceKeys.PREF_CURRENT_APP_USER))
             {
-                UserId = Preferences.Get("UserId", "Not found");
-                LoginButtonText = "Logout";
+                var userAsJson = Preferences.Get(PreferenceKeys.PREF_CURRENT_APP_USER, "Not found");
+
+                try
+                {
+                    AppUser = JsonConvert.DeserializeObject<User>(userAsJson);
+                    UserName = AppUser.UserName;
+
+                    LoginButtonText = "Logout";
+                }
+                catch (Exception)
+                {
+                    UserName = "";
+                    LoginButtonText = "Login";
+                    return;
+                }
+
             }
             else
             {
@@ -66,8 +83,9 @@ namespace RecipeCosts.ViewModels
                 await Shell.Current.GoToAsync($"//{nameof(LoginPage)}");
             } else
             {
-                Preferences.Remove("UserId");
-                UserId = "";
+                Preferences.Remove(PreferenceKeys.PREF_CURRENT_APP_USER_ID);
+                Preferences.Remove(PreferenceKeys.PREF_CURRENT_APP_USER);
+                UserName = "";
                 LoginButtonText = "Login";
             }
         }

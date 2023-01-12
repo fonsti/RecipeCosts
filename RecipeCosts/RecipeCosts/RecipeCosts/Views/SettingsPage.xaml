@@ -25,7 +25,7 @@
                 <Label
                     Text="Logged in as:"/>
                 <Entry
-                    Text="{Binding UserId, Mode=OneWay, UpdateSourceEventName=PropertyChanged}"
+                    Text="{Binding UserName, Mode=OneWay, UpdateSourceEventName=PropertyChanged}"
                     IsReadOnly="True"/>
             </StackLayout>
             <Button
