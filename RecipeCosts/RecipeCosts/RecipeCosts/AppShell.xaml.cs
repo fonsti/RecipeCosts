@@ -14,6 +14,8 @@ namespace RecipeCosts
             Routing.RegisterRoute(nameof(ItemDetailPage), typeof(ItemDetailPage));
             Routing.RegisterRoute(nameof(NewItemPage), typeof(NewItemPage));
             Routing.RegisterRoute(nameof(LoginPage), typeof(LoginPage));
+            Routing.RegisterRoute(nameof(IngredientDetailPage), typeof(IngredientDetailPage));
+            Routing.RegisterRoute(nameof(RecipeDetailsPage), typeof(RecipeDetailsPage));
         }
 
         private async void OnMenuItemClicked(object sender, EventArgs e)

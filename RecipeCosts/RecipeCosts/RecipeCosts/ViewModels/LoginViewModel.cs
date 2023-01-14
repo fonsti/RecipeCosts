@@ -249,7 +249,7 @@ namespace RecipeCosts.ViewModels
 
         public async void OnCancelClicked()
         {
-            await Shell.Current.GoToAsync($"//{nameof(AboutPage)}");
+            await Shell.Current.GoToAsync("..");
         }
     }
 }
