@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace RecipeCosts.ViewModels
@@ -31,6 +32,19 @@ namespace RecipeCosts.ViewModels
 		public RecipesViewModel()
 		{
 			AddRecipeCommand = new Command(OnAddRecipe);
+		}
+
+		public async void OnAppearing()
+		{
+			if (Preferences.ContainsKey(PreferenceKeys.PREF_CURRENT_APP_USER))
+			{
+
+			}
+			else
+			{
+				await App.Current.MainPage.DisplayAlert("Info", "You are not logged in, yet. Please log in.", "OK");
+                await Shell.Current.GoToAsync($"{nameof(LoginPage)}");
+            }
 		}
 
 		public async void OnAddRecipe(object obj)
