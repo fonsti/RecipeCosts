@@ -22,7 +22,7 @@ namespace RecipeCosts.Views
         {
             base.OnAppearing();
             var vm = BindingContext as SettingsViewModel;
-            vm.Init();
+            vm.Onappearing();
         }
     }
 }

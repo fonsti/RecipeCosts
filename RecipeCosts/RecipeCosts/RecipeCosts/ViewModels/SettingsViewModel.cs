@@ -46,10 +46,10 @@ namespace RecipeCosts.ViewModels
         {
             LoginLogoutCommand = new Command(OnLoginLogoutClicked);
 
-            Init();
+            Onappearing();
         }
 
-        public void Init()
+        public void Onappearing()
         {
             if (Preferences.ContainsKey(PreferenceKeys.PREF_CURRENT_APP_USER))
             {
