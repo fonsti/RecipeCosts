@@ -13,5 +13,6 @@ namespace RecipeCosts.Models
     public class FirebaseCollectionKeys
     {
         public const string COL_APP_USERS = "AppUsers";
+        public const string COL_INGREDIENTS = "Ingredients";
     }
 }

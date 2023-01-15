@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RecipeCosts.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,6 +16,13 @@ namespace RecipeCosts.Views
         public IngredientsPage()
         {
             InitializeComponent();
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            var vm = BindingContext as IngredientsViewModel;
+            vm.OnApprearing();
         }
     }
 }

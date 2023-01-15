@@ -14,10 +14,13 @@
     
     <ContentPage.Content>
         <Grid>
-            <CollectionView>
+            <CollectionView
+                ItemsSource="{Binding Ingredients}"
+                SelectedItem="{Binding SelectedIngredient}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        
+                        <Label
+                            Text="{Binding Name}"/>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
                 <CollectionView.EmptyView>

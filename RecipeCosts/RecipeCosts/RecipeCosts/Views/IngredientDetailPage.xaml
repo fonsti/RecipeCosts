@@ -7,12 +7,33 @@
     <ContentPage.BindingContext>
         <vm:IngredientDetailViewModel/>
     </ContentPage.BindingContext>
-    
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Save" Command="{Binding SaveCommand}"/>
+    </ContentPage.ToolbarItems>
+
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Image
+                Source="android_passed_out.jpg"/>
+
+            <Entry
+                Grid.Row="1"
+                Placeholder="Name"
+                Text="{Binding IngredientName}"/>
+
+            <Entry
+                Grid.Row="2"
+                Placeholder="Price"
+                Text="{Binding IngredientPrice}"
+                Keyboard="Numeric"/>
+        </Grid>
     </ContentPage.Content>
 </ContentPage>
