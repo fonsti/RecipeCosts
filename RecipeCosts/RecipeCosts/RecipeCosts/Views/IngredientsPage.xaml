@@ -19,8 +19,17 @@
                 SelectedItem="{Binding SelectedIngredient}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Label
-                            Text="{Binding Name}"/>
+                        <Grid>
+                            <Label
+                                Text="{Binding Name}"/>
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer 
+                                    NumberOfTapsRequired="1"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:IngredientsViewModel}}, Path=IngredientTapped}"		
+                                    CommandParameter="{Binding .}">
+                                </TapGestureRecognizer>
+                            </Grid.GestureRecognizers>
+                        </Grid>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
                 <CollectionView.EmptyView>

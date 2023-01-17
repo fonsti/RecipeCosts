@@ -10,14 +10,31 @@ using Xamarin.Forms;
 
 namespace RecipeCosts.ViewModels
 {
-    public class IngredientDetailViewModel
+    [QueryProperty(nameof(PropertyDictId), nameof(PropertyDictId))]
+    public class IngredientDetailViewModel : BaseViewModel
     {
+        private string propertyDictId;
+
+        public string PropertyDictId
+        {
+            get { return propertyDictId; }
+            set { 
+                propertyDictId = value;
+                if (!String.IsNullOrEmpty(value))
+                {
+                    LoadFromPropertyDict(value);
+                }
+            }
+        }
+
         private Ingredient ingredient;
 
         public Ingredient Ingredient
         {
             get { return ingredient; }
-            set { ingredient = value; }
+            set { 
+                ingredient = value;
+            }
         }
 
         private string ingredientId;
@@ -25,7 +42,11 @@ namespace RecipeCosts.ViewModels
         public string IngredientId
         {
             get { return ingredientId; }
-            set { ingredientId = value; }
+            set { 
+                ingredientId = value;
+                Ingredient.Id = ingredientId;
+                OnPropertyChanged();
+            }
         }
 
         private string ingredientName;
@@ -36,6 +57,7 @@ namespace RecipeCosts.ViewModels
             set { 
                 ingredientName = value;
                 Ingredient.Name = ingredientName;
+                OnPropertyChanged();
             }
         }
 
@@ -47,6 +69,7 @@ namespace RecipeCosts.ViewModels
             set { 
                 ingredientPrice = value;
                 Ingredient.Price = ingredientPrice;
+                OnPropertyChanged();
             }
         }
 
@@ -57,8 +80,8 @@ namespace RecipeCosts.ViewModels
         public IngredientDetailViewModel()
         {
             SaveCommand = new Command(OnSaveClicked);
-
-            OnAppearing();
+            Ingredient = new Ingredient();
+            IsNewItem = true;
         }
 
         public async void OnSaveClicked()
@@ -94,17 +117,22 @@ namespace RecipeCosts.ViewModels
             await Shell.Current.GoToAsync("..");
         }
 
-        public void OnAppearing()
+        private void LoadFromPropertyDict(string propertyId)
         {
-            Ingredient = new Ingredient();
+            if (Application.Current.Properties.TryGetValue(propertyId, out object retrievedIngredeint))
+            {
+                var ingredient = retrievedIngredeint as Ingredient;
 
-            if (IngredientId == null)
-            {
-                IsNewItem = true;
-            } else
-            {
+                this.IngredientId = ingredient.Id;
+                this.IngredientName = ingredient.Name;
+                this.IngredientPrice = ingredient.Price;
+
                 IsNewItem = false;
             }
+        }
+
+        public void OnAppearing()
+        {
         }
     }
 }

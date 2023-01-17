@@ -16,6 +16,7 @@ namespace RecipeCosts.Views
         public IngredientDetailPage()
         {
             InitializeComponent();
+            BindingContext = new IngredientDetailViewModel();
         }
 
         protected override void OnAppearing()

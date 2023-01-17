@@ -4,9 +4,9 @@
              xmlns:vm="clr-namespace:RecipeCosts.ViewModels"
              x:Class="RecipeCosts.Views.IngredientDetailPage">
 
-    <ContentPage.BindingContext>
+    <!--<ContentPage.BindingContext>
         <vm:IngredientDetailViewModel/>
-    </ContentPage.BindingContext>
+    </ContentPage.BindingContext>-->
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Save" Command="{Binding SaveCommand}"/>
@@ -27,12 +27,12 @@
             <Entry
                 Grid.Row="1"
                 Placeholder="Name"
-                Text="{Binding IngredientName}"/>
+                Text="{Binding IngredientName, Mode=TwoWay, UpdateSourceEventName=PropertyChanged}"/>
 
             <Entry
                 Grid.Row="2"
                 Placeholder="Price"
-                Text="{Binding IngredientPrice}"
+                Text="{Binding IngredientPrice, Mode=TwoWay, UpdateSourceEventName=PropertyChanged}"
                 Keyboard="Numeric"/>
         </Grid>
     </ContentPage.Content>
