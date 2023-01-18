@@ -33,13 +33,15 @@ namespace RecipeCosts.ViewModels
         }
 
 
-        public Command AddIngredientCommand { get; set; }
-        public Command<Ingredient> IngredientTapped { get; set; }
+        public Command AddIngredientCommand { get; private set; }
+        public Command<Ingredient> IngredientTappedCommand { get; private set; }
+        public Command IngredientLongPressCommand { get; private set; }
 
         public IngredientsViewModel()
         {
             AddIngredientCommand = new Command(OnAddIngredient);
-            IngredientTapped = new Command<Ingredient>(OnEditItem);
+            IngredientTappedCommand = new Command<Ingredient>(OnEditItem);
+            IngredientLongPressCommand = new Command<Ingredient>(OnDeleteItem);
 
             Ingredients = new ObservableCollection<Ingredient>();
         }
@@ -87,6 +89,28 @@ namespace RecipeCosts.ViewModels
             Application.Current.Properties.Add(propertyId, ingredient);
 
             await Shell.Current.GoToAsync($"{nameof(IngredientDetailPage)}?{nameof(IngredientDetailViewModel.PropertyDictId)}={propertyId}");
+        }
+
+        public async void OnDeleteItem(Ingredient ingredient)
+        {
+            if (ingredient == null)
+            {
+                return;
+            }
+
+            var actionSheetResult = await App.Current.MainPage.DisplayActionSheet("Do you want to delete this Ingredient?", null, null, new string[] { "Delete", "Cancel" });
+
+            if (actionSheetResult.Equals("Delete"))
+            {
+                await CrossCloudFirestore
+                    .Current
+                    .Instance
+                    .Collection(FirebaseCollectionKeys.COL_INGREDIENTS)
+                    .Document(ingredient.Id)
+                    .DeleteAsync();
+
+                Ingredients.Remove(ingredient);
+            }
         }
 
         private void UpdateIngredients(IEnumerable<Ingredient> newIngredients)
