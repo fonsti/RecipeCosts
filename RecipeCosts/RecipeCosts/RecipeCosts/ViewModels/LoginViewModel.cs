@@ -157,7 +157,12 @@ namespace RecipeCosts.ViewModels
                         //Application.Current.Resources.Add("UserId", MyUser.Id);
                         Preferences.Set(PreferenceKeys.PREF_CURRENT_APP_USER_ID, MyUser.Id);
 
-                        await CrossCloudFirestore.Current.Instance.Collection(FirebaseCollectionKeys.COL_APP_USERS).AddAsync(MyUser);
+                        await CrossCloudFirestore
+                            .Current
+                            .Instance
+                            .Collection(FirebaseCollectionKeys.COL_APP_USERS)
+                            .Document(MyUser.Id)
+                            .SetAsync(MyUser);
 
                         var userAsJson = JsonConvert.SerializeObject(MyUser);
                         Preferences.Set(PreferenceKeys.PREF_CURRENT_APP_USER, userAsJson);
@@ -173,9 +178,14 @@ namespace RecipeCosts.ViewModels
 
                     Preferences.Set(PreferenceKeys.PREF_CURRENT_APP_USER_ID, MyUser.Id);
 
-                    var query = await CrossCloudFirestore.Current.Instance.Collection(FirebaseCollectionKeys.COL_APP_USERS).WhereEqualsTo("Id", MyUser.Id).LimitTo(1).GetAsync();
+                    var document = await CrossCloudFirestore
+                        .Current
+                        .Instance
+                        .Collection(FirebaseCollectionKeys.COL_APP_USERS)
+                        .Document(MyUser.Id)
+                        .GetAsync();
 
-                    MyUser = query.ToObjects<User>().FirstOrDefault();
+                    MyUser = document.ToObject<User>();
 
                     var userAsJson = JsonConvert.SerializeObject(MyUser);
                     Preferences.Set(PreferenceKeys.PREF_CURRENT_APP_USER, userAsJson);
