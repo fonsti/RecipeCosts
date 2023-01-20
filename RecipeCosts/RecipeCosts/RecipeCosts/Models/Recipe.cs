@@ -10,8 +10,8 @@ namespace RecipeCosts.Models
     {
         [Id]
         public string Id { get; set; }
-        public double OverallCosts { get; set; }
         public string Name { get; set; }
+        public double OverallCosts { get; set; }
 
         [ServerTimestamp(CanReplace = false)]
         public Timestamp CreatedAt { get; set; }
