@@ -14,5 +14,7 @@ namespace RecipeCosts.Models
     {
         public const string COL_APP_USERS = "AppUsers";
         public const string COL_INGREDIENTS = "Ingredients";
+        public const string COL_INGREDIENT_USERID = "UserId";
+        public const string COL_INGREDIENT_UPDATEDAT = "UpdatedAt";
     }
 }

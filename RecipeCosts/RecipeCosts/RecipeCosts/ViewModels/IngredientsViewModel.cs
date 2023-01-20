@@ -5,6 +5,7 @@ using RecipeCosts.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Text;
 using Xamarin.Essentials;
 using Xamarin.Forms;
@@ -55,16 +56,45 @@ namespace RecipeCosts.ViewModels
                 await App.Current.MainPage.DisplayAlert("Error", "App user not found.", "OK");
             } else
             {
-                var query = await CrossCloudFirestore
+                var cacheQuery = await CrossCloudFirestore
                     .Current
                     .Instance
                     .Collection(FirebaseCollectionKeys.COL_INGREDIENTS)
-                    .WhereEqualsTo("UserId", appUserId)
-                    .GetAsync();
+                    .WhereEqualsTo(FirebaseCollectionKeys.COL_INGREDIENT_USERID, appUserId)
+                    .GetAsync(Source.Cache);
 
-                var fetchedIngredients = query.ToObjects<Ingredient>();
+                var cachededIngredients = cacheQuery.ToObjects<Ingredient>();
 
-                UpdateIngredients(fetchedIngredients);
+                UpdateIngredients(cachededIngredients, true);
+
+                if (cachededIngredients.ToList().Count() == 0)
+                {
+                    var serverQuery = await CrossCloudFirestore
+                        .Current
+                        .Instance
+                        .Collection(FirebaseCollectionKeys.COL_INGREDIENTS)
+                        .WhereEqualsTo(FirebaseCollectionKeys.COL_INGREDIENT_USERID, appUserId)
+                        .GetAsync(Source.Server);
+
+                    var serverIngredients = serverQuery.ToObjects<Ingredient>();
+
+                    UpdateIngredients(serverIngredients);
+                }
+                else
+                {
+                    var latestTimeStamp = Ingredients.OrderByDescending(x => x.UpdatedAt).FirstOrDefault().UpdatedAt;
+
+                    var timestampQuery = await CrossCloudFirestore
+                        .Current
+                        .Instance
+                        .Collection(FirebaseCollectionKeys.COL_INGREDIENTS)
+                        .WhereGreaterThan(FirebaseCollectionKeys.COL_INGREDIENT_UPDATEDAT, latestTimeStamp)
+                        .GetAsync(Source.Server);
+
+                    var timestampIngredients = timestampQuery.ToObjects<Ingredient>();
+
+                    UpdateIngredients(timestampIngredients);
+                }
             }
         }
 
@@ -113,9 +143,12 @@ namespace RecipeCosts.ViewModels
             }
         }
 
-        private void UpdateIngredients(IEnumerable<Ingredient> newIngredients)
+        private void UpdateIngredients(IEnumerable<Ingredient> newIngredients, bool resetList = false)
         {
-            Ingredients.Clear();
+            if (resetList)
+            {
+                Ingredients.Clear();
+            }
 
             foreach (var ingredient in newIngredients)
             {
