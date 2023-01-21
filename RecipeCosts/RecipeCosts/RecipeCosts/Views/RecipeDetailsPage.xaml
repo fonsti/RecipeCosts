@@ -7,12 +7,57 @@
     <ContentPage.BindingContext>
         <vm:RecipeDetailsViewModel/>
     </ContentPage.BindingContext>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem
+            Text="Save"/>
+    </ContentPage.ToolbarItems>
     
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Image
+                Source="android_passed_out.jpg"/>
+
+            <Entry
+                Grid.Row="1"
+                Placeholder="Name"
+                Text="{Binding IngredientName, Mode=TwoWay, UpdateSourceEventName=PropertyChanged}"/>
+
+            <Entry
+                Grid.Row="2"
+                Placeholder="Price"
+                Text="{Binding IngredientPrice, Mode=TwoWay, UpdateSourceEventName=PropertyChanged}"
+                Keyboard="Numeric"/>
+
+            <Button
+                Grid.Row="3"
+                Text="Add Ingredient"
+                HorizontalOptions="CenterAndExpand"/>
+
+            <CollectionView
+                Grid.Row="4">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+                <CollectionView.EmptyView>
+                    <Label
+                        Text="No ingredients found!"
+                        HorizontalOptions="CenterAndExpand"
+                        HorizontalTextAlignment="Center"
+                        VerticalOptions="CenterAndExpand"
+                        VerticalTextAlignment="Center"/>
+                </CollectionView.EmptyView>
+            </CollectionView>
+        </Grid>
     </ContentPage.Content>
 </ContentPage>
