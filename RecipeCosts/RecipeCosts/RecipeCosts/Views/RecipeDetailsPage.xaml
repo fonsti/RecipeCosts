@@ -40,7 +40,8 @@
             <Button
                 Grid.Row="3"
                 Text="Add Ingredient"
-                HorizontalOptions="CenterAndExpand"/>
+                HorizontalOptions="CenterAndExpand"
+                Command="{Binding AddIngredientCommand}"/>
 
             <CollectionView
                 Grid.Row="4">

@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<xct:Popup xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             x:Class="RecipeCosts.Views.Popups.SelectIngredientPopup">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+
+        <StackLayout
+            Grid.Row="1"
+            Grid.ColumnSpan="2"
+            Orientation="Horizontal">
+            <Button
+                Text="Add"/>
+            <Button
+                Text="Cancel"/>
+        </StackLayout>
+    </Grid>
+</xct:Popup>
